@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+}
+
+
+plugins {
+    id "java"
+    id "eclipse"
+    id "application"
+}
+
+
+archivesBaseName = "java-kvsholder"
+mainClassName="com.intellecteu.hyperledger.chaincode.common.KVSHolder"
+
+run {
+    if (project.hasProperty("appArgs")) {
+        args = Eval.me(appArgs)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+distZip {
+    archiveName='Chaincode.zip'
+    duplicatesStrategy='exclude'
+}
+
+startScripts{
+    applicationName='runChaincode'
+}
+
+
+dependencies {
+    compile 'io.grpc:grpc-all:0.13.2'
+    compile 'commons-cli:commons-cli:1.3.1'
+    compile 'org.apache.commons:commons-lang3:3.0'
+    compile 'org.slf4j:slf4j-api:1.7.18'
+    compile 'org.slf4j:slf4j-log4j12:1.7.18'
+    compile project(':core:chaincode:shim:java')
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.4'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.4'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+    testCompile 'junit:junit:4.12'
+}
