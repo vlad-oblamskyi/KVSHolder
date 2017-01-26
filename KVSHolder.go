@@ -33,7 +33,8 @@ func (t *KVSHolder) Invoke(stub shim.ChaincodeStubInterface, function string, ar
 }
 
 func (t *KVSHolder) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	result := string(stub.GetState(args[0]))
+	state, _ := stub.GetState(args[0])
+	result := string(state)
 	myLogger.Infof("Query result [{%s}] for {%s}", result, strings.Join(args, ","));
 	return result, nil
 }
