@@ -36,7 +36,7 @@ func (t *KVSHolder) Query(stub shim.ChaincodeStubInterface, function string, arg
 	state, _ := stub.GetState(args[0])
 	result := string(state)
 	myLogger.Infof("Query result [{%s}] for {%s}", result, strings.Join(args, ","));
-	return result, nil
+	return []byte(result), nil
 }
 
 func main() {
